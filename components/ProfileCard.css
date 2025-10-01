@@ -1,0 +1,245 @@
+
+/* components/ProfileCard.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --pc-bg: #ec9d34;
+  --pc-border: rgba(26, 26, 26, 0.2);
+  --pc-glow: rgba(255, 255, 255, 0.05);
+  --pc-text: #1a1a1a;
+  --pc-text-secondary: #525252;
+  --pc-primary: #ec9d34;
+  --pc-primary-dark: #d68d2e;
+  --pc-card-opacity: 0.7;
+}
+
+.pc-card-wrapper {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --background-x: 50%;
+  --background-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --card-opacity: 0.7;
+  
+  position: relative;
+  perspective: 1000px;
+  isolation: isolate;
+  font-family: 'Inter', sans-serif;
+}
+
+.pc-card-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--behind-gradient);
+  transform: translateZ(-1px);
+  will-change: background;
+  transition: opacity 0.6s ease-in-out;
+  opacity: 0;
+}
+
+.pc-card-wrapper.active::before {
+  opacity: 1;
+}
+
+.pc-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.pc-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.pc-card::before {
+  background: radial-gradient(
+    80rem circle at var(--pointer-x) var(--pointer-y),
+    var(--pc-glow),
+    transparent 40%
+  );
+  opacity: var(--pointer-from-center, 0);
+  transition: opacity 0.6s ease-in-out;
+}
+
+.pc-card:active::before {
+  opacity: 1 !important;
+}
+
+.pc-card.active::before {
+  opacity: 1;
+}
+
+.pc-inside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--inner-gradient);
+  border-radius: inherit;
+  overflow: hidden;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.pc-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.05),
+    transparent 50%
+  );
+  mix-blend-mode: screen;
+  opacity: calc(var(--pointer-from-center) * 0.7 + 0.3);
+  transition: opacity 0.5s ease-out;
+}
+
+.pc-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.08) 48%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.08) 52%,
+    rgba(255, 255, 255, 0) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(calc((var(--pointer-from-left) - 0.5) * 200%)) translateY(calc((var(--pointer-from-top) - 0.5) * 200%));
+  mix-blend-mode: screen;
+  opacity: calc(var(--pointer-from-center) * 0.5);
+  transition: opacity 0.5s ease-out;
+}
+
+.pc-content {
+  color: var(--pc-text);
+  z-index: 1;
+}
+
+.pc-avatar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid var(--pc-border);
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.pc-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.pc-user-details {
+  display: flex;
+  align-items: center;
+}
+
+.pc-user-text {
+  text-align: center;
+}
+
+.pc-status {
+  font-size: 0.875rem;
+  color: var(--pc-text);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.pc-status::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #34d399; /* Green for Online/Ready */
+}
+
+.pc-contact-btn {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  width: 100%;
+}
+
+.pc-contact-btn:hover {
+  background-color: #2a2a2a;
+}
+
+.pc-details {
+  text-align: center;
+}
+
+.pc-details h3 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--pc-text);
+}
+
+.pc-details p {
+  font-size: 1.125rem;
+  color: #f5f5f5;
+  margin: 0.25rem 0 0;
+  min-height: 1.4em; /* Prevents layout shift during animation */
+}
+
+.role-title {
+  animation: slide-up-fade-in 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes slide-up-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

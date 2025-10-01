@@ -1,0 +1,70 @@
+/* components/ElectricBorder.css */
+
+.electric-border {
+  --eb-border-width: 2px;
+  --eb-glow-blur: 2px;
+  --eb-glow-opacity: 0.15;
+  --eb-bg-glow-blur: 15px;
+  --eb-bg-glow-opacity: 0.1;
+  --eb-bg-glow-size: 10px;
+
+  position: relative;
+  isolation: isolate;
+}
+
+.eb-svg {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  top: -2px;
+  left: -2px;
+  pointer-events: none;
+}
+
+.eb-layers {
+  position: absolute;
+  inset: calc(-1 * var(--eb-border-width));
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.eb-stroke,
+.eb-glow-1,
+.eb-glow-2,
+.eb-background-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: var(--eb-border-width) solid var(--electric-border-color);
+}
+
+.eb-stroke {
+  opacity: 0.7;
+}
+
+.eb-glow-1 {
+  filter: blur(var(--eb-glow-blur));
+  opacity: var(--eb-glow-opacity);
+}
+
+.eb-glow-2 {
+  filter: blur(calc(var(--eb-glow-blur) * 0.5));
+  opacity: calc(var(--eb-glow-opacity) * 0.5);
+}
+
+.eb-background-glow {
+  filter: blur(var(--eb-bg-glow-blur));
+  opacity: var(--eb-bg-glow-opacity);
+  border-width: var(--eb-bg-glow-size);
+  inset: calc(-1 * var(--eb-bg-glow-size));
+}
+
+.eb-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit; 
+  background-color: var(--pc-bg);
+  overflow: hidden;
+}
